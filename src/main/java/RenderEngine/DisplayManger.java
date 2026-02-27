@@ -10,10 +10,6 @@ import org.lwjgl.system.MemoryUtil;
 
 public class DisplayManger {
 
-    public static final float FOV = (float) Math.toRadians(60);
-    public static final float Z_NEAR = 0.01f;
-    public static final float Z_FAR = 1000f;
-
 
     private final String title;
 
@@ -89,11 +85,7 @@ public class DisplayManger {
 
         GL.createCapabilities();
 
-        GL11.glClearColor(0.0f,0.0f,0.0f,0.0f);
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_STENCIL_TEST);
-        //GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glCullFace(GL11.GL_BACK);
+
     }
 
     public void updateDisplay(){
@@ -164,21 +156,6 @@ public class DisplayManger {
     public void setWindow(long window) {
         this.window = window;
     }
-
-    public Matrix4f getProjectionMatrix() {
-        return projectionMatrix;
-    }
-
-    public Matrix4f updateProjectionMatrix(){
-        float aspectRatio = (float) width/height;
-        return projectionMatrix.setPerspective( FOV, aspectRatio, Z_NEAR, Z_FAR);
-    }
-
-    public Matrix4f updateProjectionMatrix(Matrix4f matrix, int width, int height){
-        float aspectRatio = (float) width/height;
-        return matrix.setPerspective( FOV, aspectRatio, Z_NEAR, Z_FAR);
-    }
-
 
 
 }

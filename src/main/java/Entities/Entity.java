@@ -2,6 +2,7 @@ package Entities;
 
 import Models.RawModel;
 import Models.TexturedModel;
+import Tools.Maths;
 import org.joml.Vector3f;
 
 public class Entity {
@@ -21,15 +22,15 @@ public class Entity {
     }
 
     public void increasePosition(float x, float y, float z) {
-        this.position.x += x;
-        this.position.y += y;
-        this.position.z += z;
+        this.position.x += Maths.deltaTime * x;
+        this.position.y += Maths.deltaTime * y;
+        this.position.z += Maths.deltaTime * z;
     }
 
     public void increaseRotation(float x, float y, float z) {
-        this.rotX += x;
-        this.rotY += y;
-        this.rotZ += z;
+        this.rotX += Maths.deltaTime * x;
+        this.rotY += Maths.deltaTime * y;
+        this.rotZ += Maths.deltaTime * z;
     }
 
 

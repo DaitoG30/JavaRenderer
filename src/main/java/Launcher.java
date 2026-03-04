@@ -1,13 +1,13 @@
 import Entities.Entity;
 import Models.TexturedModel;
-import RenderEngine.Camera;
-import RenderEngine.DisplayManger;
-import RenderEngine.Loader;
+import RenderEngine.*;
 import Models.RawModel;
-import RenderEngine.Renderer;
 import Shaders.StaticShader;
 import Textures.ModelTexture;
+import Tools.Maths;
+import org.joml.Math;
 import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFW;
 
 public class Launcher {
 
@@ -23,97 +23,20 @@ public class Launcher {
         Camera camera = new Camera(window);
 
 
-
-        float[] vertices = {
-                -0.5f,0.5f,-0.5f,
-                -0.5f,-0.5f,-0.5f,
-                0.5f,-0.5f,-0.5f,
-                0.5f,0.5f,-0.5f,
-
-                -0.5f,0.5f,0.5f,
-                -0.5f,-0.5f,0.5f,
-                0.5f,-0.5f,0.5f,
-                0.5f,0.5f,0.5f,
-
-                0.5f,0.5f,-0.5f,
-                0.5f,-0.5f,-0.5f,
-                0.5f,-0.5f,0.5f,
-                0.5f,0.5f,0.5f,
-
-                -0.5f,0.5f,-0.5f,
-                -0.5f,-0.5f,-0.5f,
-                -0.5f,-0.5f,0.5f,
-                -0.5f,0.5f,0.5f,
-
-                -0.5f,0.5f,0.5f,
-                -0.5f,0.5f,-0.5f,
-                0.5f,0.5f,-0.5f,
-                0.5f,0.5f,0.5f,
-
-                -0.5f,-0.5f,0.5f,
-                -0.5f,-0.5f,-0.5f,
-                0.5f,-0.5f,-0.5f,
-                0.5f,-0.5f,0.5f
-
-        };
-
-        int[] indices = {
-                0,1,3,
-                3,1,2,
-                4,5,7,
-                7,5,6,
-                8,9,11,
-                11,9,10,
-                12,13,15,
-                15,13,14,
-                16,17,19,
-                19,17,18,
-                20,21,23,
-                23,21,22
-
-        };
-
-        float[] textureCoords = {
-
-                0,0,
-                0,1,
-                1,1,
-                1,0,
-                0,0,
-                0,1,
-                1,1,
-                1,0,
-                0,0,
-                0,1,
-                1,1,
-                1,0,
-                0,0,
-                0,1,
-                1,1,
-                1,0,
-                0,0,
-                0,1,
-                1,1,
-                1,0,
-                0,0,
-                0,1,
-                1,1,
-                1,0
-
-
-        };
-
-
-
-        RawModel model = loader.loadToVAO(vertices,textureCoords,indices);
+        RawModel model = OBJLoader.loadOBJModel("dragon",loader);
         ModelTexture texture = new ModelTexture(loader.loadTexture("Dirt"));
         TexturedModel texturedModel = new TexturedModel(texture,model);
-        Entity entity = new Entity(texturedModel,new Vector3f(0,0,-200), 0,0,1,1);
+        Entity entity = new Entity(texturedModel,new Vector3f(0,0,-200), 0.5f,0.5f,0,1);
 
 
+        Maths.setLastTime(GLFW.glfwGetTime());
 
         while (!window.windowShouldClose()){
-            entity.increaseRotation(0.0002f,0.0002f,0);
+            Maths.setCurrentTime(GLFW.glfwGetTime());
+            Maths.calcDeltaTime();
+            Maths.setLastTime(GLFW.glfwGetTime());
+            entity.increasePosition(0,(float) Math.sin(GLFW.glfwGetTime() * 3) * 0.45f ,0);
+            entity.increaseRotation(0,1,0);
             renderer.prepareDisplay();
             camera.move();
             shader.start();

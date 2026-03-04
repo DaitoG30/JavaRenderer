@@ -1,5 +1,6 @@
 package RenderEngine;
 
+import Tools.Maths;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
@@ -16,18 +17,23 @@ public class Camera {
     }
 
     public void move(){
+
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_W) == GLFW.GLFW_PRESS){
-            position.z -= 0.2f;
+            position.z -= Maths.deltaTime * 50;
         }
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_A) == GLFW.GLFW_PRESS){
-            position.x -= 0.002f;
+            position.x -= Maths.deltaTime * 1;
         }
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_D) == GLFW.GLFW_PRESS){
-            position.x += 0.002f;
+            position.x += Maths.deltaTime * 1;
         }
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_S) == GLFW.GLFW_PRESS){
-            position.z += 0.2f;
+            position.z += Maths.deltaTime * 50;
         }
+
+
+
+
     }
 
 

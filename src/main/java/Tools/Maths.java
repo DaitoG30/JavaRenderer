@@ -3,8 +3,14 @@ package Tools;
 import RenderEngine.Camera;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
 
 public class Maths {
+
+    public static double lastTime;
+    public static double currentTime;
+    public static float deltaTime = (float)(currentTime - lastTime );
 
     public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale){
         Matrix4f matrix = new Matrix4f();
@@ -24,4 +30,17 @@ public class Maths {
         return matrix;
     }
 
+
+
+    public static void setLastTime(double time) {
+        lastTime = time;
+    }
+
+    public static void setCurrentTime(double time) {
+        currentTime = time;
+    }
+
+    public static void calcDeltaTime(){
+        deltaTime = (float)(currentTime - lastTime );
+    }
 }

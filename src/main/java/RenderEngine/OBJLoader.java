@@ -93,7 +93,7 @@ public class OBJLoader {
         System.out.println("Indices: " + indices.size());
 
 
-        return loader.loadToVAO(verticesArray,texturesArray,indicesArray);
+        return loader.loadToVAO(verticesArray,texturesArray,normalsArray,indicesArray);
     }
 
 

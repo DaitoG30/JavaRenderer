@@ -2,7 +2,9 @@ package RenderEngine;
 
 import Tools.Maths;
 import org.joml.Vector3f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
+import java.nio.DoubleBuffer;
 
 public class Camera {
 
@@ -10,6 +12,7 @@ public class Camera {
     private float yaw = 0f;
     private float pitch = 0f;
     private float roll = 0f;
+
 
     private DisplayManger Display;
     public Camera(DisplayManger DisplayManger) {
@@ -30,10 +33,6 @@ public class Camera {
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_S) == GLFW.GLFW_PRESS){
             position.z += Maths.deltaTime * 50;
         }
-
-
-
-
     }
 
 

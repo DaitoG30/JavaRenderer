@@ -24,6 +24,7 @@ public class StaticShader extends ShaderProgram {
     protected void bind(){
         super.bind(0,"position");
         super.bind(1,"textureCoords");
+        super.bind(2,"normal");
 
     }
 
@@ -45,7 +46,8 @@ public class StaticShader extends ShaderProgram {
     }
 
     public void loadLight(Light light){
-
+        super.loadVector(location_lightPosition, light.getPosition());
+        super.loadVector(location_lightColor, light.getColor());
     }
 
     public void loadViewMatrix(Camera camera){

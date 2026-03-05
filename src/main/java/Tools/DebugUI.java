@@ -1,20 +1,25 @@
 package Tools;
 
+import Engine.SceneManager;
+import Entities.ModelEntity;
 import RenderEngine.DisplayManger;
 import imgui.ImGui;
 import imgui.ImGuiIO;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 
+import java.util.List;
+
 public class DebugUI {
-    private static ImGuiImplGlfw imGuiGlfw = new ImGuiImplGlfw();
-    private static ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
-    private DisplayManger window;
+    private static final ImGuiImplGlfw imGuiGlfw = new ImGuiImplGlfw();
+    private static final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
+    private final DisplayManger window;
+
+    float angle = 0.0f;
 
     public DebugUI(DisplayManger display) {
         window = display;
     }
-
 
     public void imGuiInit() {
         ImGui.createContext();
@@ -28,11 +33,14 @@ public class DebugUI {
     }
 
 
-    public void imGuiRenderDebug() {
+    public void imGuiRenderDebug(SceneManager sceneManager) {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
         ImGui.begin("Debug");
-        ImGui.text("FPS: " );
+        List<ModelEntity> child = sceneManager.getChildren();
+        for(ModelEntity modelEntity : child){
+            ImGui.text("ModelEntity-"+ modelEntity.getId());
+        }
         ImGui.end();
         ImGui.render();
         imGuiGl3.renderDrawData(ImGui.getDrawData());
@@ -43,9 +51,6 @@ public class DebugUI {
         imGuiGlfw.dispose();
         ImGui.destroyContext();
     }
-
-
-
 
 
 }

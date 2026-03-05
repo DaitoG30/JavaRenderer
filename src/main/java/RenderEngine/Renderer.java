@@ -1,6 +1,6 @@
 package RenderEngine;
 
-import Entities.Entity;
+import Entities.ModelEntity;
 import Models.RawModel;
 import Models.TexturedModel;
 import Shaders.StaticShader;
@@ -40,14 +40,14 @@ public class Renderer {
     }
 
 
-    public void render(Entity entity, StaticShader staticShader) {
-        TexturedModel texturedModel = entity.getModel();
+    public void render(ModelEntity modelEntity, StaticShader staticShader) {
+        TexturedModel texturedModel = modelEntity.getModel();
         RawModel model = texturedModel.getRawModel();
         GL30.glBindVertexArray(model.getVaoID());
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
         GL20.glEnableVertexAttribArray(2);
-        Matrix4f matrix4f = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(),entity.getRotZ(), entity.getScale());
+        Matrix4f matrix4f = Maths.createTransformationMatrix(modelEntity.getPosition(), modelEntity.getRotX(), modelEntity.getRotY(), modelEntity.getRotZ(), modelEntity.getScale());
         staticShader.loadTransformationMatrix(matrix4f);
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0);

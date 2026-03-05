@@ -5,6 +5,7 @@ import RenderEngine.*;
 import Models.RawModel;
 import Shaders.StaticShader;
 import Textures.ModelTexture;
+import Tools.DebugUI;
 import Tools.Maths;
 import imgui.ImGui;
 import imgui.ImGuiIO;
@@ -38,19 +39,11 @@ public class Launcher {
         TexturedModel texturedModel = new TexturedModel(texture,model);
         Entity entity = new Entity(texturedModel,new Vector3f(0,0,-200), 0.5f,0.5f,0,0.3f);
         Light light = new Light(new Vector3f(1,1,1),new Vector3f(1,140,1));
-
+        DebugUI debugUI = new DebugUI(window);
 
         Maths.setLastTime(GLFW.glfwGetTime());
 
-
-        ImGui.createContext();
-        ImGuiIO io = ImGui.getIO();
-        io.setIniFilename(null); // disable .ini file
-
-        ImGui.styleColorsDark();
-
-        imGuiGlfw.init(window.getWindow(), true);
-        imGuiGl3.init("#version 400 core");
+        debugUI.imGuiInit();
 
         while (!window.windowShouldClose()){
             Maths.setCurrentTime(GLFW.glfwGetTime());
@@ -65,25 +58,12 @@ public class Launcher {
             shader.loadViewMatrix(camera);
             renderer.render(entity,shader);
             shader.stop();
-            // Start frame
-            imGuiGlfw.newFrame();
-            ImGui.newFrame();
-
-// Your UI here
-            ImGui.begin("Debug");
-            ImGui.text("FPS: " );
-            ImGui.end();
-
-// Render
-            ImGui.render();
-            imGuiGl3.renderDrawData(ImGui.getDrawData());
+            debugUI.imGuiRenderDebug();
             window.updateDisplay();
 
         }
 
-        imGuiGl3.dispose();
-        imGuiGlfw.dispose();
-        ImGui.destroyContext();
+        debugUI.cleanUp();
         shader.cleanUp();
         loader.cleanUp();
         window.closeDisplay();

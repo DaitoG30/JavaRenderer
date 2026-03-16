@@ -2,11 +2,16 @@ package Tools;
 
 import Engine.SceneManager;
 import Entities.ModelEntity;
+import Models.RawModel;
+import Models.TexturedModel;
 import RenderEngine.DisplayManger;
+import RenderEngine.OBJLoader;
+import Textures.ModelTexture;
 import imgui.ImGui;
 import imgui.ImGuiIO;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -33,10 +38,14 @@ public class DebugUI {
     }
 
 
-    public void imGuiRenderDebug(SceneManager sceneManager) {
+    public void imGuiRenderDebug(SceneManager sceneManager,TexturedModel texturedModel) {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
         ImGui.begin("Debug");
+        if(ImGui.button("Add Entity")){
+            sceneManager.addChild(new ModelEntity(texturedModel,new Vector3f(1,0,-200), 0.5f,0.5f,0,0.3f));
+        }
+
         List<ModelEntity> child = sceneManager.getChildren();
         for(ModelEntity modelEntity : child){
             ImGui.text("ModelEntity-"+ modelEntity.getId());

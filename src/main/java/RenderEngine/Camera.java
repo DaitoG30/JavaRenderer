@@ -25,14 +25,22 @@ public class Camera {
             position.z -= Maths.deltaTime * 50;
         }
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_A) == GLFW.GLFW_PRESS){
-            position.x -= Maths.deltaTime * 1;
+            position.x -= Maths.deltaTime * 20;
         }
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_D) == GLFW.GLFW_PRESS){
-            position.x += Maths.deltaTime * 1;
+            position.x += Maths.deltaTime * 20;
         }
         if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_S) == GLFW.GLFW_PRESS){
             position.z += Maths.deltaTime * 50;
         }
+        if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_SPACE) == GLFW.GLFW_PRESS){
+            position.y += Maths.deltaTime * 20;
+        }
+        if (GLFW.glfwGetKey(Display.getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS){
+            position.y -= Maths.deltaTime * 20;
+        }
+
+
     }
 
 

@@ -28,9 +28,14 @@ public class SceneManager {
 
     }
 
-    public void removeChild(ModelEntity modelEntity){
-        children.remove(modelEntity);
+    public void update(){
+//        for (ModelEntity modelEntity : children){
+//            modelEntity.update();
+//        }
     }
+
+
+
 
     public SceneManager(){
 

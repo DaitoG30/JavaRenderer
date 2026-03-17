@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class Renderer {
 
-    public static final float FOV = (float) Math.toRadians(90);
+    public static final float FOV = (float) Math.toRadians(60);
     public static final float Z_NEAR = 0.1f;
     public static final float Z_FAR = 1000f;
     public DisplayManger Display;

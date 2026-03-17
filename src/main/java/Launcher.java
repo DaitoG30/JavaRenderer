@@ -31,13 +31,6 @@ public class Launcher {
         Camera camera = new Camera(window);
         Grid grid = new Grid(10,10);
 
-
-        RawModel model = OBJLoader.loadOBJModel("dragon",loader);
-        ModelTexture texture = new ModelTexture(loader.loadTexture("Dirt"));
-        texture.setShineDamper(10);
-        texture.setReflectivity(0.5f);
-        TexturedModel texturedModel = new TexturedModel(texture,model);
-        ModelEntity modelEntity = new ModelEntity(texturedModel,new Vector3f(0,0,-200), 0.5f,0.5f,0,0.3f);
         Light light = new Light(new Vector3f(1,1,1),new Vector3f(1,140,1));
         DebugUI debugUI = new DebugUI(window);
 
@@ -47,7 +40,7 @@ public class Launcher {
 
         grid.initializeTiles();
         for(Tile tile: grid.tiles){
-            System.out.println(Arrays.toString(tile.coordinates));
+            System.out.println(tile.coordinates);
         }
 
         MasterRenderer masterRenderer = new MasterRenderer(window);
@@ -61,9 +54,6 @@ public class Launcher {
                masterRenderer.processEntities(tile.getModelEntity());
 
             }
-            modelEntity.increasePosition(0,(float) Math.sin(GLFW.glfwGetTime() * 3) * 0.45f ,0);
-            modelEntity.increaseRotation(0,1,0);
-            masterRenderer.processEntities(modelEntity);
             masterRenderer.render(light,camera);
             window.updateDisplay();
 

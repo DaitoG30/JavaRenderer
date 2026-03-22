@@ -15,14 +15,16 @@ public class Grid {
 
     public int width;
     public int height;
+    public float scale;
 
     public List<Tile> tiles =  new ArrayList<>();
     public List<Unit> units =  new ArrayList<>();
 
 
-    public Grid(int width, int height) {
+    public Grid(int width, int height, float tileScale) {
         this.width = width;
         this.height = height;
+        this.scale = tileScale;
     }
 
     public void render(MasterRenderer renderer){

@@ -16,7 +16,7 @@ public class OBJLoader {
         FileReader fileReader;
 
         try{
-            fileReader = new FileReader("src/main/res/" + filename + ".obj");
+            fileReader = new FileReader("src/main/resources/" + filename + ".obj");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

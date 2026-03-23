@@ -50,5 +50,11 @@ public class Tile {
         this.impassable = impassable;
     }
 
-    
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
 }

@@ -2,6 +2,7 @@ package Tools;
 
 import RenderEngine.Camera;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
@@ -11,6 +12,14 @@ public class Maths {
     public static double lastTime;
     public static double currentTime;
     public static float deltaTime = (float)(currentTime - lastTime );
+
+    public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale){
+        Matrix4f matrix = new Matrix4f();
+        matrix.translate(translation.x, translation.y, 0f);
+        matrix.scale(new Vector3f(scale.x, scale.y, 1f));
+        return matrix;
+    }
+
 
     public static Matrix4f createTransformationMatrix(Vector3f translation, float rx, float ry, float rz, float scale){
         Matrix4f matrix = new Matrix4f();

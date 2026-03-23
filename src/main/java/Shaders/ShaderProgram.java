@@ -5,10 +5,9 @@ import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.system.windows.INPUT;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.FloatBuffer;
 
 public abstract class ShaderProgram {
@@ -86,7 +85,8 @@ public abstract class ShaderProgram {
     private static int loadShader(int type, String file){
         StringBuilder shaderCode = new StringBuilder();
         try{
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            InputStream inputStream = ShaderProgram.class.getResourceAsStream(file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null ){
                 shaderCode.append(line).append("//\n");

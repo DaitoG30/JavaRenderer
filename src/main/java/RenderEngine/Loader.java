@@ -36,6 +36,13 @@ public class Loader {
         return new RawModel(vaoID, indices.length);
     }
 
+    public RawModel loadToVao(float[] positions){
+        int  vaoID = createVao();
+        this.storeDataInAttributeList(0,2,positions);
+        unbindVAO();
+        return new RawModel(vaoID, positions.length/2);
+    }
+
     public int loadTexture(String textureName){
 
         int textureID = GL11.glGenTextures();
@@ -46,7 +53,7 @@ public class Loader {
             IntBuffer height = stack.mallocInt(1);
             IntBuffer channels = stack.mallocInt(1);
 
-            ByteBuffer image = STBImage.stbi_load("src/main/res/"+textureName+".png", width, height, channels, 4);
+            ByteBuffer image = STBImage.stbi_load("src/main/resources/"+textureName+".png", width, height, channels, 4);
             if (image == null) {
                 throw new RuntimeException("Failed to load texture: " + STBImage.stbi_failure_reason());
             }

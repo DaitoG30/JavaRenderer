@@ -1,22 +1,22 @@
 import Engine.Grid;
-import Engine.SceneManager;
 import Engine.Tile;
-import Entities.ModelEntity;
+import Engine.TurnManager;
 import Entities.Light;
+import GUI.GuiRenderer;
+import GUI.GuiTexture;
 import Models.TexturedModel;
 import RenderEngine.*;
 import Models.RawModel;
-import Shaders.StaticShader;
 import Textures.ModelTexture;
 import Tools.DebugUI;
 import Tools.Maths;
-import imgui.gl3.ImGuiImplGl3;
-import imgui.glfw.ImGuiImplGlfw;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class Launcher {
 
@@ -29,10 +29,18 @@ public class Launcher {
         Loader loader = new Loader();
 
         Camera camera = new Camera(window);
-        Grid grid = new Grid(10,10);
+        Grid grid = new Grid(10,10, new TurnManager(40));
 
         Light light = new Light(new Vector3f(1,1,1),new Vector3f(1,140,1));
         DebugUI debugUI = new DebugUI(window);
+
+
+        List<GuiTexture> guis = new ArrayList<GuiTexture>();
+        GuiTexture guiTexture = new GuiTexture(loader.loadTexture("grey"),new Vector2f(0.2f),new Vector2f(0.2f) );
+        guis.add(guiTexture);
+        guiTexture.setVisible(true);
+
+        GuiRenderer guiRenderer = new GuiRenderer(loader);
 
         Maths.setLastTime(GLFW.glfwGetTime());
 
@@ -43,21 +51,26 @@ public class Launcher {
             System.out.println(tile.coordinates);
         }
 
+        RawModel model = OBJLoader.loadOBJModel("Cylinder",loader);
+        ModelTexture texture = new ModelTexture(loader.loadTexture("Grey"));
+        TexturedModel cylinder = new TexturedModel(texture,model);
+        grid.placeUnit(new Vector2f(2,9),cylinder);
+        grid.placeUnit(new Vector2f(5,5),cylinder);
+
         MasterRenderer masterRenderer = new MasterRenderer(window);
         while (!window.windowShouldClose()){
             Maths.setCurrentTime(GLFW.glfwGetTime());
             Maths.calcDeltaTime();
             Maths.setLastTime(GLFW.glfwGetTime());
             camera.move();
-            for(Tile tile: grid.tiles){
-
-               masterRenderer.processEntities(tile.getModelEntity());
-
-            }
+            grid.render(masterRenderer);
             masterRenderer.render(light,camera);
+            guiRenderer.render(guis);
             window.updateDisplay();
 
         }
+
+        guiRenderer.cleanUp();
         masterRenderer.cleanUp();
         debugUI.cleanUp();
         loader.cleanUp();

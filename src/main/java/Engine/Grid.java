@@ -13,14 +13,18 @@ import java.util.List;
 
 public class Grid {
 
-    public int width;
-    public int height;
+    private final int width;
+    private final int height;
+
+    Loader loader = new Loader();
 
     public List<Tile> tiles =  new ArrayList<>();
     public List<Unit> units =  new ArrayList<>();
+    public TurnManager turnManager;
 
 
-    public Grid(int width, int height) {
+    public Grid(int width, int height, TurnManager turnManager) {
+        this.turnManager = turnManager;
         this.width = width;
         this.height = height;
     }
@@ -36,8 +40,12 @@ public class Grid {
 
     }
 
+    public void cleanUp(){
+        loader.cleanUp();
+
+    }
+
     public void initializeTiles() {
-        Loader loader = new Loader();
         RawModel model = OBJLoader.loadOBJModel("cube",loader);
         ModelTexture texture = new ModelTexture(loader.loadTexture("Dirt"));
         TexturedModel texturedModel = new TexturedModel(texture,model);
@@ -50,26 +58,56 @@ public class Grid {
     }
 
     private void createTile(int x, int y, TexturedModel texturedModel){
-
         Tile tile = new Tile(x,y,texturedModel);
+        tiles.add(tile);
+    }
 
-       tiles.add(tile);
+    /**
+     *Placing the Unit onto the grid and marking in its position in world space.
+     *
+     * @param coordinates These are the X and Y Values as a Vector-2f and determine the placement of the unit and which tile they will be placed on.
+     * @param texturedModel The Model that the unit will be using to represent itself.
+     *
+     *
+     * @see Unit
+     */
+
+    public void placeUnit(Vector2f coordinates, TexturedModel texturedModel ){
+
+        Tile tile = getTileAt(coordinates);
+
+        if(tile != null ){
+            if (!tile.isOccupied()){
+                tile.setOccupied(true);
+                tile.setImpassable(true);
+                Unit unit = new Unit(coordinates, texturedModel);
+                units.add(unit);
+                tile.setUnit(unit);
+            }
+            else {
+                System.err.println("Tile already occupied");
+            }
+        }
+        else{
+            System.err.println("No tile at " + coordinates);
+        }
+
+
+    }
+
+    public Tile getTileAt(Vector2f coordinates){
+        for(Tile tile: tiles){
+            if (coordinates.equals(tile.coordinates)) return tile;
+        }
+        return null;
     }
 
 
-    private void placeUnit(Vector2f coordinates, TexturedModel texturedModel ){
-
-        Unit unit = new Unit(coordinates,texturedModel);
-        units.add(unit);
+    private void traverseGridHeight(float amount,Unit unit){
 
     }
 
-
-    private void traverseGridHeight(int amount,int[] currentPosition, Unit unit){
-
-    }
-
-    private void traverseGridWidth(int amount,int[] currentPosition, Unit unit){
+    private void traverseGridWidth(float amount, Unit unit){
 
     }
 

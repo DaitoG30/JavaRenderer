@@ -1,11 +1,7 @@
-package Engine;
+package TurnEngine;
 
 import Entities.ModelEntity;
-import Models.RawModel;
 import Models.TexturedModel;
-import RenderEngine.Loader;
-import RenderEngine.OBJLoader;
-import Textures.ModelTexture;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 

@@ -18,14 +18,12 @@ public class DisplayManger {
 
     private boolean resize , vsync;
 
-    private final Matrix4f projectionMatrix;
 
     public DisplayManger(String title, int width, int height, boolean vsync) {
         this.title = title;
         this.width = width;
         this.height = height;
         this.vsync = vsync;
-        projectionMatrix = new Matrix4f();
 
     }
 

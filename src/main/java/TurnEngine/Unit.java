@@ -1,4 +1,4 @@
-package Engine;
+package TurnEngine;
 
 import Components.GameComponents.Stat;
 import Entities.Entity;
@@ -9,16 +9,22 @@ import org.joml.Vector3f;
 
 public class Unit extends Entity {
 
+
     private Vector2f coordinates = new Vector2f();
 
     ModelEntity modelEntity;
-    
-    private boolean knocked;
-    private boolean dead;
+    public UnitController unitController;
+
+
+    public float getActionValue() {
+        return actionValue;
+    }
+
     private float actionValue;
-    private boolean playerControlled;
+
+
     private Stat health = new Stat(100f);
-    private Stat speed =  new Stat(100f);
+    private Stat speed =  new Stat((float) (50 * Math.random()));
 
 
     /**
@@ -27,18 +33,16 @@ public class Unit extends Entity {
      * @param texturedModel The Model that the unit will be using to represent itself.
      */
 
-    public Unit(Vector2f coordinates, TexturedModel texturedModel) {
+    public Unit(Vector2f coordinates, TexturedModel texturedModel, boolean playerControlled) {
 
         setModelEntity(new ModelEntity(texturedModel, new Vector3f(coordinates.x ,1 ,coordinates.y), 0,0,0,0.3f));
 
     }
 
     public float calcActionValue(){
-        actionValue = (speed.getMaxValue()/1000f);
+        actionValue = (1000f/speed.getMaxValue());
         return actionValue;
-
     }
-
 
     /**
      *
@@ -48,7 +52,7 @@ public class Unit extends Entity {
      */
 
     public void turnEnd(){
-
+        unitController.setActive(false);
     }
 
     /**
@@ -59,9 +63,9 @@ public class Unit extends Entity {
      */
 
     public void turnStart(){
-
+        unitController.setActive(true);
     }
-    
+
     public ModelEntity getModelEntity() {
         return modelEntity;
     }

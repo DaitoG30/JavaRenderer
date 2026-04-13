@@ -1,4 +1,4 @@
-package Engine;
+package TurnEngine;
 
 import Models.RawModel;
 import Models.TexturedModel;
@@ -46,7 +46,7 @@ public class Grid {
     }
 
     public void initializeTiles() {
-        RawModel model = OBJLoader.loadOBJModel("cube",loader);
+        RawModel model = OBJLoader.loadOBJModel("Plane",loader);
         ModelTexture texture = new ModelTexture(loader.loadTexture("Dirt"));
         TexturedModel texturedModel = new TexturedModel(texture,model);
 
@@ -72,7 +72,7 @@ public class Grid {
      * @see Unit
      */
 
-    public void placeUnit(Vector2f coordinates, TexturedModel texturedModel ){
+    public void placeUnit(Vector2f coordinates, TexturedModel texturedModel, boolean player ) {
 
         Tile tile = getTileAt(coordinates);
 
@@ -80,7 +80,7 @@ public class Grid {
             if (!tile.isOccupied()){
                 tile.setOccupied(true);
                 tile.setImpassable(true);
-                Unit unit = new Unit(coordinates, texturedModel);
+                Unit unit = new Unit(coordinates, texturedModel, player);
                 units.add(unit);
                 tile.setUnit(unit);
             }
@@ -92,7 +92,8 @@ public class Grid {
             System.err.println("No tile at " + coordinates);
         }
 
-
+        turnManager.units = units;
+        turnManager.battleStart();
     }
 
     public Tile getTileAt(Vector2f coordinates){

@@ -8,8 +8,8 @@ import java.util.List;
 
 public class TurnManager {
 
+    BattleManager battleManager = new BattleManager();
     public List<Unit> units = new ArrayList<>();
-    private List<Unit> turnOrder = new ArrayList<>();
     public Unit currentUnit;
     private int currentTurn;
     private int unitIndex;
@@ -21,7 +21,11 @@ public class TurnManager {
     }
 
     public void battleStart(){
+        for (Unit unit : units){
+            unit.turnManager = this;
+        }
         calculateOrder();
+        battleManager.turnManager = this;
         unitIndex = 0;
         System.out.println("Turn: " + currentTurn);
     }
@@ -53,10 +57,6 @@ public class TurnManager {
     public void calculateOrder(){
 
         units.sort(Comparator.comparing(Unit::calcActionValue));
-        for (Unit unit : units){
-            System.out.println(unit.getActionValue());
-        }
-
         currentUnit = units.getFirst();
 
     }
@@ -64,13 +64,11 @@ public class TurnManager {
     public void turnChange(){
         if (unitIndex < (units.toArray().length - 1)) {
             unitIndex++;
-            currentUnit.turnEnd();
             currentUnit = units.get(unitIndex);
             currentUnit.turnStart();
         }
         else {
             unitIndex = 0;
-            currentUnit.turnEnd();
             currentUnit = units.getFirst();
             currentUnit.turnStart();
         }
@@ -80,5 +78,15 @@ public class TurnManager {
         System.out.println("Turn: " + currentTurn);
     }
 
+    public void endGame(){
+        unitIndex = 0;
+        System.out.println("Game Over");
+    }
+
+    public void update(){
+        if (currentTurn >= turnLimit){
+            endGame();
+        }
+    }
 
 }

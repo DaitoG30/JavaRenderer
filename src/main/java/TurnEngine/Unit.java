@@ -1,19 +1,37 @@
 package TurnEngine;
 
+import Components.GameComponents.Affliction;
+import Components.GameComponents.Boon;
 import Components.GameComponents.Stat;
+import Components.Skill;
 import Entities.Entity;
 import Entities.ModelEntity;
 import Models.TexturedModel;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import java.util.List;
+
 public class Unit extends Entity {
 
 
     private Vector2f coordinates = new Vector2f();
+    public TurnManager turnManager;
+    public BattleManager.Team team;
 
     ModelEntity modelEntity;
+
+    Skill basicSkill;
+    Skill skill1;
+    Skill skill2;
+    Skill ultimate;
+    List<Unit> targets;
     public UnitController unitController;
+
+    List<Affliction> afflictions;
+    List<Boon> boons;
+
+
 
 
     public float getActionValue() {
@@ -44,25 +62,14 @@ public class Unit extends Entity {
         return actionValue;
     }
 
-    /**
-     *
-     * Turn End logic can and should be overridden for unit specific custom logic.
-     * Can be used to trigger boon and affliction effects
-     *
-     */
-
     public void turnEnd(){
         unitController.setActive(false);
+        turnManager.turnChange();
     }
 
-    /**
-     *
-     * Turn Start logic can and should be overridden for unit specific custom logic.
-     * Can be used to trigger boon and affliction effects
-     *
-     */
-
     public void turnStart(){
+        targets = turnManager.battleManager.getTargets(this);
+
         unitController.setActive(true);
     }
 
@@ -84,5 +91,38 @@ public class Unit extends Entity {
 
     public void setCoordinates(Vector2f coordinates) {
         this.coordinates = coordinates;
+    }
+
+
+    public Skill getBasicSkill() {
+        return basicSkill;
+    }
+
+    public void setBasicSkill(Skill basicSkill) {
+        this.basicSkill = basicSkill;
+    }
+
+    public Skill getSkill1() {
+        return skill1;
+    }
+
+    public void setSkill1(Skill skill1) {
+        this.skill1 = skill1;
+    }
+
+    public Skill getSkill2() {
+        return skill2;
+    }
+
+    public void setSkill2(Skill skill2) {
+        this.skill2 = skill2;
+    }
+
+    public Skill getUltimate() {
+        return ultimate;
+    }
+
+    public void setUltimate(Skill ultimate) {
+        this.ultimate = ultimate;
     }
 }

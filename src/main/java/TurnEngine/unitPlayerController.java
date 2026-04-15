@@ -1,14 +1,16 @@
 package TurnEngine;
 
-import Components.Skills.Skill;
-import org.joml.Vector2f;
+import Components.Skill;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.List;
 
 public class unitPlayerController extends UnitController{
 
     InputManager Input;
-    Grid grid;
-    Skill ActiveSkill;
+    Skill activeSkill;
+    List<Unit> targets;
+    List<Unit> validTargets;
 
 
     public unitPlayerController(InputManager Input, Unit unit){
@@ -18,17 +20,58 @@ public class unitPlayerController extends UnitController{
 
     @Override
     public void update(){
+        targets = unit.targets;
         if (isActive()){
             //input checks
             if (Input.is_action_just_pressed(GLFW.GLFW_KEY_1)) {
-                System.out.println("skill 1");
-
+                if ((activeSkill == null && validTargets == null) || (activeSkill != unit.basicSkill)){
+                    activeSkill = unit.basicSkill;
+                    validTargets = activeSkill.validateTargets(targets);
+                    System.out.println(activeSkill.getName() + " prepped");
+                    System.out.println(validTargets.toString());
+                }
+                else if (!validTargets.isEmpty()) {
+                    //placeholder function tbh
+                    activeSkill.performSkill();
+                    activeSkill = null;
+                    validTargets = null;
+                }
+                else {
+                    System.out.println("no valid targets found");
+                }
             }
             if (Input.is_action_just_pressed(GLFW.GLFW_KEY_2)) {
-                System.out.println("skill 2");
+                if ((activeSkill == null && validTargets == null) || (activeSkill != unit.skill1)){
+                    activeSkill = unit.skill1;
+                    validTargets = activeSkill.validateTargets(targets);
+                    System.out.println(activeSkill.getName() + " prepped");
+                    System.out.println(validTargets.toString());
+                } else if (!validTargets.isEmpty()) {
+                    //placeholder function tbh
+                    activeSkill.performSkill();
+                    activeSkill = null;
+                    validTargets = null;
+                }
+                else {
+                    System.out.println("no valid targets found");
+                }
             }
             if (Input.is_action_just_pressed(GLFW.GLFW_KEY_X)) {
-                System.out.println("Ultimate skill");
+                if ((activeSkill == null && validTargets == null) || (activeSkill != unit.ultimate)){
+                    activeSkill = unit.ultimate;
+                    validTargets = activeSkill.validateTargets(targets);
+                    System.out.println(activeSkill.getName() + " prepped");
+                    System.out.println(validTargets.toString());
+                }
+                else if (!validTargets.isEmpty()) {
+                    //placeholder function tbh
+                    activeSkill.performSkill();
+                    activeSkill = null;
+                    validTargets = null;
+                }
+                else {
+                    System.out.println("no valid targets found");
+                }
             }
 
         }

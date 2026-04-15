@@ -1,3 +1,6 @@
+import Components.Skills.FeastOfAbsolutionTest;
+import Components.Skills.LeachBiteTest;
+import Components.Skills.VerdictTest;
 import GUI.Button;
 import TurnEngine.*;
 import Entities.Light;
@@ -7,12 +10,10 @@ import Models.TexturedModel;
 import RenderEngine.*;
 import Models.RawModel;
 import Textures.ModelTexture;
-import Tools.DebugUI;
 import Tools.Maths;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Launcher {
         Light light = new Light(new Vector3f(1,1,1),new Vector3f(1,5140,1));
 
 
-        List<GuiTexture> guis = new ArrayList<GuiTexture>();
+        List<GuiTexture> guis = new ArrayList<>();
         GuiTexture guiTexture = new GuiTexture(loader.loadTexture("grey"),new Vector2f(0.2f),new Vector2f(0.2f) );
         guis.add(guiTexture);
         guiTexture.setVisible(true);
@@ -57,7 +58,12 @@ public class Launcher {
 
         for (Unit unit: grid.units){
             unit.unitController = new unitPlayerController(Input,unit);
+            unit.setBasicSkill(new FeastOfAbsolutionTest());
+            unit.setUltimate(new VerdictTest());
+            unit.setSkill1(new LeachBiteTest());
         }
+        grid.units.get(0).team = BattleManager.Team.TEAM_A;
+        grid.units.get(1).team = BattleManager.Team.TEAM_B;
 
         MasterRenderer masterRenderer = new MasterRenderer(window);
 

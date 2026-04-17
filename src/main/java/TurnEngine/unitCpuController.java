@@ -14,7 +14,7 @@ public class unitCpuController extends UnitController{
     public void update() {
         System.out.println("turn performed");
         activeSkill = unit.basicSkill;
-        activeSkill.performSkill();
+        activeSkill.performSkill(unit);
         unit.turnEnd();
     }
 

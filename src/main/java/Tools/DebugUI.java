@@ -1,12 +1,9 @@
 package Tools;
 
-import Engine.SceneManager;
+import TurnEngine.SceneManager;
 import Entities.ModelEntity;
-import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.DisplayManger;
-import RenderEngine.OBJLoader;
-import Textures.ModelTexture;
 import imgui.ImGui;
 import imgui.ImGuiIO;
 import imgui.gl3.ImGuiImplGl3;

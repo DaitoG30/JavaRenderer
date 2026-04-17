@@ -3,6 +3,7 @@ package TurnEngine;
 import Components.GameComponents.Affliction;
 import Components.GameComponents.Boon;
 import Components.GameComponents.Stat;
+import Components.Resource;
 import Components.Skill;
 import Entities.Entity;
 import Entities.ModelEntity;
@@ -10,6 +11,7 @@ import Models.TexturedModel;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class Unit extends Entity {
@@ -21,10 +23,20 @@ public class Unit extends Entity {
 
     ModelEntity modelEntity;
 
+    //Skills
     Skill basicSkill;
     Skill skill1;
     Skill skill2;
     Skill ultimate;
+    //Resources
+    Resource Health;
+    Resource Mana;
+    Resource Stamina;
+    Resource Stackable;
+    //Stats
+    private Stat Defense;
+    private Stat speed =  new Stat((float) (50 * Math.random()));
+
     List<Unit> targets;
     public UnitController unitController;
 
@@ -41,8 +53,7 @@ public class Unit extends Entity {
     private float actionValue;
 
 
-    private Stat health = new Stat(100f);
-    private Stat speed =  new Stat((float) (50 * Math.random()));
+
 
 
     /**
@@ -73,6 +84,16 @@ public class Unit extends Entity {
         unitController.setActive(true);
     }
 
+    public Resource getResource(Resource.Type type) {
+        return switch (type) {
+            case HEALTH -> Health;
+            case MANA -> Mana;
+            case STAMINA -> Stamina;
+            case STACK ->  Stackable;
+            default -> null;
+        };
+    }
+
     public ModelEntity getModelEntity() {
         return modelEntity;
     }
@@ -92,8 +113,41 @@ public class Unit extends Entity {
     public void setCoordinates(Vector2f coordinates) {
         this.coordinates = coordinates;
     }
+    //Resource getters and setters
 
+    public Resource getHealth() {
+        return Health;
+    }
 
+    public void setHealth(Resource health) {
+        Health = health;
+    }
+
+    public Resource getMana() {
+        return Mana;
+    }
+
+    public void setMana(Resource mana) {
+        Mana = mana;
+    }
+
+    public Resource getStamina() {
+        return Stamina;
+    }
+
+    public void setStamina(Resource stamina) {
+        Stamina = stamina;
+    }
+
+    public Resource getStackable() {
+        return Stackable;
+    }
+
+    public void setStackable(Resource stackable) {
+        Stackable = stackable;
+    }
+
+    //Skill getter and setters
     public Skill getBasicSkill() {
         return basicSkill;
     }

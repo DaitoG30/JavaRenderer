@@ -7,6 +7,10 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+	from sourceSets.main.resources
+}
+
 dependencies {
 	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
 

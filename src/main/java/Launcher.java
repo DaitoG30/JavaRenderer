@@ -1,3 +1,4 @@
+import Components.Resource;
 import Components.Skills.FeastOfAbsolutionTest;
 import Components.Skills.LeachBiteTest;
 import Components.Skills.VerdictTest;
@@ -58,6 +59,18 @@ public class Launcher {
 
         for (Unit unit: grid.units){
             unit.unitController = new unitPlayerController(Input,unit);
+            Resource Mana = new Resource();
+            Mana.setType(Resource.Type.MANA);
+            Mana.setName("Mana");
+            Mana.setAmount(50);
+            unit.setMana(Mana);
+            unit.setHealth(new Resource());
+            Resource Stamina = new Resource();
+            Stamina.setType(Resource.Type.STAMINA);
+            Stamina.setName("Stamina");
+            Stamina.setAmount(50);
+            unit.setStamina(Stamina);
+            unit.setStackable(new Resource());
             unit.setBasicSkill(new FeastOfAbsolutionTest());
             unit.setUltimate(new VerdictTest());
             unit.setSkill1(new LeachBiteTest());

@@ -12,7 +12,6 @@ public class BattleManager {
         TEAM_B,
     }
 
-
     public List<Unit> getTargets(Unit currentUnit) {
         List<Unit> possibleTargets = new ArrayList<>();
         for (Unit unit :turnManager.units){

@@ -18,6 +18,8 @@ public class Skill {
     private List<Unit> validTargets;
     private List<Affliction> afflictions;
     private List<Boon> boons;
+    private int baseValue;
+    private boolean teamTargeting;
     private final List<ResourceCost> cost = new ArrayList<>();
 
 
@@ -26,9 +28,9 @@ public class Skill {
 
 
     public enum Range{
-        SINGLE,
-        BURST,
-        AREA_OF_EFFECT
+        SINGLE, //one target
+        BURST, // one main target with two adjacent targets
+        AREA_OF_EFFECT // all targets
     }
 
 
@@ -51,7 +53,6 @@ public class Skill {
     }
 
 
-
     public boolean canCast(Unit unit) {
         for (ResourceCost cost : cost) {
             if (!cost.canCast(unit)){
@@ -63,9 +64,16 @@ public class Skill {
     }
 
 
-    public void performSkill(Unit unit){
+    public void performSkill(Unit unit,List<Unit> targets){
         for(ResourceCost cost : cost){
             cost.cast(unit);
+        }
+        // deal damage to or provide heals for target(s)
+        for (Unit target : targets) {
+            Resource targetHealth = target.getHealth();
+            targetHealth.setAmount( targetHealth.getAmount() + baseValue);
+            System.out.println("Target Health: " + targetHealth.getAmount());
+            target.resourceCheck();
         }
         System.out.println(getName() + " performed");
     }
@@ -94,4 +102,19 @@ public class Skill {
         this.skillRange = skillRange;
     }
 
+    public int getBaseValue() {
+        return baseValue;
+    }
+
+    public void setBaseValue(int baseValue) {
+        this.baseValue = baseValue;
+    }
+
+    public boolean isTeamTargeting() {
+        return teamTargeting;
+    }
+
+    public void setTeamTargeting(boolean teamTargeting) {
+        this.teamTargeting = teamTargeting;
+    }
 }

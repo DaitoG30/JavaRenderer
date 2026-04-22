@@ -8,9 +8,10 @@ public class VerdictTest extends Skill {
 
     public VerdictTest(){
         setName("Verdict");
-        setSkillRange(Range.SINGLE);
         addCost(new ResourceCost(Resource.Type.MANA,10));
         addCost(new ResourceCost(Resource.Type.STAMINA,20));
+        setSkillRange(Range.SINGLE);
+        setBaseValue(-40);
     }
 
 }

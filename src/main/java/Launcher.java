@@ -54,8 +54,8 @@ public class Launcher {
         RawModel model = OBJLoader.loadOBJModel("Cylinder",loader);
         ModelTexture texture = new ModelTexture(loader.loadTexture("Grey"));
         TexturedModel cylinder = new TexturedModel(texture,model);
-        grid.placeUnit(new Vector2f(2,9),cylinder,false);
-        grid.placeUnit(new Vector2f(5,5),cylinder,true);
+        grid.placeUnit(new Vector2f(2,9),cylinder);
+        grid.placeUnit(new Vector2f(5,5),cylinder);
 
         for (Unit unit: grid.units){
             unit.unitController = new unitPlayerController(Input,unit);
@@ -64,7 +64,11 @@ public class Launcher {
             Mana.setName("Mana");
             Mana.setAmount(50);
             unit.setMana(Mana);
-            unit.setHealth(new Resource());
+            Resource Health = new Resource();
+            Health.setType(Resource.Type.HEALTH);
+            Health.setName("Health");
+            Health.setAmount(50);
+            unit.setHealth(Health);
             Resource Stamina = new Resource();
             Stamina.setType(Resource.Type.STAMINA);
             Stamina.setName("Stamina");
@@ -77,6 +81,8 @@ public class Launcher {
         }
         grid.units.get(0).team = BattleManager.Team.TEAM_A;
         grid.units.get(1).team = BattleManager.Team.TEAM_B;
+
+        grid.turnManager.battleStart();
 
         MasterRenderer masterRenderer = new MasterRenderer(window);
 

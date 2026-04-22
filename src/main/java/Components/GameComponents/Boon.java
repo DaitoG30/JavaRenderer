@@ -1,8 +1,7 @@
 package Components.GameComponents;
 
-import Components.Component;
 
-public class Boon extends Component {
+public class Boon {
 
     private String boonName;
     private Stat targetStat;

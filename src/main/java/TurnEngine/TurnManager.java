@@ -27,6 +27,7 @@ public class TurnManager {
         calculateOrder();
         battleManager.turnManager = this;
         unitIndex = 0;
+        currentUnit.turnStart();
         System.out.println("Turn: " + currentTurn);
     }
 
@@ -62,20 +63,19 @@ public class TurnManager {
     }
 
     public void turnChange(){
-        if (unitIndex < (units.toArray().length - 1)) {
-            unitIndex++;
+        unitIndex = (unitIndex + 1) % units.size();
+
+        if (units.get(unitIndex).isAlive) {
             currentUnit = units.get(unitIndex);
             currentUnit.turnStart();
-        }
-        else {
-            unitIndex = 0;
-            currentUnit = units.getFirst();
-            currentUnit.turnStart();
+            currentTurn++;
+            System.out.println("Turn: " + currentTurn);
+        } else {
+            turnChange();
         }
 
-        currentTurn ++;
+        battleManager.checkBattle();
 
-        System.out.println("Turn: " + currentTurn);
     }
 
     public void endGame(){

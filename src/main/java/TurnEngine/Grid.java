@@ -72,7 +72,7 @@ public class Grid {
      * @see Unit
      */
 
-    public void placeUnit(Vector2f coordinates, TexturedModel texturedModel, boolean player ) {
+    public void placeUnit(Vector2f coordinates, TexturedModel texturedModel ) {
 
         Tile tile = getTileAt(coordinates);
 
@@ -80,7 +80,7 @@ public class Grid {
             if (!tile.isOccupied()){
                 tile.setOccupied(true);
                 tile.setImpassable(true);
-                Unit unit = new Unit(coordinates, texturedModel, player);
+                Unit unit = new Unit(coordinates, texturedModel);
                 units.add(unit);
                 tile.setUnit(unit);
             }
@@ -93,7 +93,6 @@ public class Grid {
         }
 
         turnManager.units = units;
-        turnManager.battleStart();
     }
 
     public Tile getTileAt(Vector2f coordinates){

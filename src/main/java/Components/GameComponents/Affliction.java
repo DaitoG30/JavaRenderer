@@ -1,8 +1,7 @@
 package Components.GameComponents;
 
-import Components.Component;
 
-public class Affliction extends Component {
+public class Affliction {
 
     private String afflictionName;
     private Stat targetStat;

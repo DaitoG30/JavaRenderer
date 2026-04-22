@@ -10,8 +10,6 @@ import Entities.ModelEntity;
 import Models.TexturedModel;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class Unit extends Entity {
@@ -20,6 +18,7 @@ public class Unit extends Entity {
     private Vector2f coordinates = new Vector2f();
     public TurnManager turnManager;
     public BattleManager.Team team;
+    boolean isAlive = true;
 
     ModelEntity modelEntity;
 
@@ -52,17 +51,13 @@ public class Unit extends Entity {
 
     private float actionValue;
 
-
-
-
-
     /**
      * Initialising the unit class
      * @param coordinates These are the X and Y Values as a Vector-2f and determine the placement of the unit and which tile they will be placed on.
      * @param texturedModel The Model that the unit will be using to represent itself.
      */
 
-    public Unit(Vector2f coordinates, TexturedModel texturedModel, boolean playerControlled) {
+    public Unit(Vector2f coordinates, TexturedModel texturedModel) {
 
         setModelEntity(new ModelEntity(texturedModel, new Vector3f(coordinates.x ,1 ,coordinates.y), 0,0,0,0.3f));
 
@@ -78,10 +73,41 @@ public class Unit extends Entity {
         turnManager.turnChange();
     }
 
+    // Used by the skill to call for the appropriate initialTargets, allies or enemies.
+    public void requestTargets(boolean teamTargeted){
+        BattleManager btManager = turnManager.battleManager;
+
+        if (!teamTargeted){
+            btManager.getEnemyTargets(this);
+        }
+        else {
+            btManager.getAlliedTargets(this);
+        }
+
+    }
+
     public void turnStart(){
-        targets = turnManager.battleManager.getTargets(this);
+        targets = turnManager.battleManager.getEnemyTargets(this);
 
         unitController.setActive(true);
+    }
+
+    public void resourceCheck() {
+        //check if dead
+        if (Health.getAmount() <= 0) {
+            isAlive = false;
+            System.out.println("dead");
+        }
+
+        if (Mana.getAmount() <= 0) {
+            //Stat reduction
+            System.out.println("mana exhausted");
+        }
+        if (Stamina.getAmount() <= 0) {
+            //Stat reduction
+            System.out.println("Stamina exhausted");
+        }
+
     }
 
     public Resource getResource(Resource.Type type) {
@@ -113,6 +139,8 @@ public class Unit extends Entity {
     public void setCoordinates(Vector2f coordinates) {
         this.coordinates = coordinates;
     }
+
+
     //Resource getters and setters
 
     public Resource getHealth() {
@@ -179,4 +207,6 @@ public class Unit extends Entity {
     public void setUltimate(Skill ultimate) {
         this.ultimate = ultimate;
     }
+
+
 }

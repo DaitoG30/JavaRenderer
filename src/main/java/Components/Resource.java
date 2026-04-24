@@ -8,6 +8,11 @@ public class Resource {
     private Type type;
 
 
+    public Resource(int maxAmount){
+        maxAmount = maxAmount;
+        amount = maxAmount;
+    }
+
     public enum Type{
         STANDARD,
         HEALTH,

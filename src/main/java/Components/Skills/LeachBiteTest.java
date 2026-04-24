@@ -10,7 +10,7 @@ public class LeachBiteTest extends Skill {
         setName("Leach Bite");
         addCost(new ResourceCost(Resource.Type.MANA,10));
         setSkillRange(Range.SINGLE);
-        setBaseValue(-20);
+        setBaseValue(-5);
     }
 
 }

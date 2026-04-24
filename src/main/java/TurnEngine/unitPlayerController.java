@@ -37,6 +37,7 @@ public class unitPlayerController extends UnitController{
     public void handleSkillInput(int key, Skill skill){
         if (Input.is_action_just_pressed(key)) {
             if ((activeSkill == null && validTargets == null) || (activeSkill != skill)){
+                finalTargets.clear();
                 activeSkill = skill;
                 validTargets = activeSkill.validateTargets(initialTargets);
                 int len =  validTargets.size();
@@ -59,7 +60,6 @@ public class unitPlayerController extends UnitController{
     }
 
     public void aimSkill(){
-
         if (activeSkill != null && !validTargets.isEmpty()) {
             switch (activeSkill.getSkillRange()) {
                 case SINGLE:
@@ -109,8 +109,6 @@ public class unitPlayerController extends UnitController{
                         finalTargets = validTargets;
                         System.out.println("All Marked");
                     }
-
-                    //System.out.println("Area of effect Skill. It affects everyone, no need to aim it.");
                     break;
             }
         }

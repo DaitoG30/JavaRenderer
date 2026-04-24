@@ -1,20 +1,22 @@
+import Components.GameComponents.Stat;
 import Components.Resource;
 import Components.Skills.FeastOfAbsolutionTest;
 import Components.Skills.LeachBiteTest;
 import Components.Skills.VerdictTest;
-import GUI.Button;
-import TurnEngine.*;
 import Entities.Light;
+import GUI.Button;
 import GUI.GuiRenderer;
 import GUI.GuiTexture;
+import Models.RawModel;
 import Models.TexturedModel;
 import RenderEngine.*;
-import Models.RawModel;
 import Textures.ModelTexture;
 import Tools.Maths;
+import TurnEngine.*;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,31 +58,35 @@ public class Launcher {
         TexturedModel cylinder = new TexturedModel(texture,model);
         grid.placeUnit(new Vector2f(2,9),cylinder);
         grid.placeUnit(new Vector2f(5,5),cylinder);
+        grid.placeUnit(new Vector2f(5,6),cylinder);
+        grid.placeUnit(new Vector2f(4,6),cylinder);
 
         for (Unit unit: grid.units){
             unit.unitController = new unitPlayerController(Input,unit);
-            Resource Mana = new Resource();
+            unit.setManaRegenRate(new Stat(0.2f));
+            unit.setStaminaRegenRate(new Stat(0.15f));
+            Resource Mana = new Resource(100);
             Mana.setType(Resource.Type.MANA);
             Mana.setName("Mana");
-            Mana.setAmount(50);
             unit.setMana(Mana);
-            Resource Health = new Resource();
+            Resource Health = new Resource(100);
             Health.setType(Resource.Type.HEALTH);
             Health.setName("Health");
-            Health.setAmount(50);
             unit.setHealth(Health);
-            Resource Stamina = new Resource();
+            Resource Stamina = new Resource(100);
             Stamina.setType(Resource.Type.STAMINA);
             Stamina.setName("Stamina");
             Stamina.setAmount(50);
             unit.setStamina(Stamina);
-            unit.setStackable(new Resource());
+            unit.setStackable(new Resource(5));
             unit.setBasicSkill(new FeastOfAbsolutionTest());
             unit.setUltimate(new VerdictTest());
             unit.setSkill1(new LeachBiteTest());
         }
         grid.units.get(0).team = BattleManager.Team.TEAM_A;
         grid.units.get(1).team = BattleManager.Team.TEAM_B;
+        grid.units.get(2).team = BattleManager.Team.TEAM_B;
+        grid.units.get(3).team = BattleManager.Team.TEAM_B;
 
         grid.turnManager.battleStart();
 

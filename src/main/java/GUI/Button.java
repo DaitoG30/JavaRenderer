@@ -1,6 +1,5 @@
 package GUI;
 
-import RenderEngine.MasterRenderer;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;

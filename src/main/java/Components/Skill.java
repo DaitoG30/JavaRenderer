@@ -13,16 +13,11 @@ public class Skill {
 
     private String name;
     private String description;
-    private int manaCost;
-    private int staminaCost;
-    private List<Unit> validTargets;
     private List<Affliction> afflictions;
     private List<Boon> boons;
     private int baseValue;
     private boolean teamTargeting;
     private final List<ResourceCost> cost = new ArrayList<>();
-
-
 
     private Range skillRange;
 
@@ -117,4 +112,16 @@ public class Skill {
     public void setTeamTargeting(boolean teamTargeting) {
         this.teamTargeting = teamTargeting;
     }
+
+    public List<Affliction> getAfflictions() {
+        return afflictions;
+    }
+
+    public void addAffliction(Affliction affliction) {
+        afflictions.add(affliction);
+    }
+
+
+
 }
+

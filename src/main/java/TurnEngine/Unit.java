@@ -33,8 +33,13 @@ public class Unit extends Entity {
     Resource Stamina;
     Resource Stackable;
     //Stats
+    private Stat Attack;
     private Stat Defense;
-    private Stat speed =  new Stat((float) (50 * Math.random()));
+    private Stat Speed;
+    private Stat manaRegenRate;
+    private Stat staminaRegenRate;
+
+    //private Stat speed =  new Stat((float) (50 * Math.random()));
 
     List<Unit> targets;
     public UnitController unitController;
@@ -64,7 +69,7 @@ public class Unit extends Entity {
     }
 
     public float calcActionValue(){
-        actionValue = (1000f/speed.getMaxValue());
+        actionValue = (1000f/10);
         return actionValue;
     }
 
@@ -89,6 +94,14 @@ public class Unit extends Entity {
     public void turnStart(){
         targets = turnManager.battleManager.getEnemyTargets(this);
 
+
+        Stamina.setAmount((int) (Stamina.getAmount() + (Stamina.getAmount() * staminaRegenRate.currentValue)));
+        Mana.setAmount((int) (Mana.getAmount() + (Mana.getAmount() * manaRegenRate.currentValue)));
+
+        System.out.println("Stamina: " + Stamina.getAmount());
+        System.out.println("Mana: " + Mana.getAmount());
+
+
         unitController.setActive(true);
     }
 
@@ -98,7 +111,6 @@ public class Unit extends Entity {
             isAlive = false;
             System.out.println("dead");
         }
-
         if (Mana.getAmount() <= 0) {
             //Stat reduction
             System.out.println("mana exhausted");
@@ -208,5 +220,29 @@ public class Unit extends Entity {
         this.ultimate = ultimate;
     }
 
+    public Stat getStaminaRegenRate() {
+        return staminaRegenRate;
+    }
 
+    public void setStaminaRegenRate(Stat staminaRegenRate) {
+        this.staminaRegenRate = staminaRegenRate;
+    }
+
+    public Stat getManaRegenRate() {
+        return manaRegenRate;
+    }
+
+    public void setManaRegenRate(Stat manaRegenRate) {
+        this.manaRegenRate = manaRegenRate;
+    }
+
+    public Stat getStat(Stat.Type type) {
+        return switch (type){
+            case ATTACK -> Attack;
+            case DEFENSE -> Defense;
+            case MANA_REGEN -> manaRegenRate;
+            case STAMINA_REGEN -> staminaRegenRate;
+            default -> null;
+        };
+    }
 }

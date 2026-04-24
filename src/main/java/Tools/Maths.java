@@ -4,8 +4,6 @@ import RenderEngine.Camera;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11;
 
 public class Maths {
 

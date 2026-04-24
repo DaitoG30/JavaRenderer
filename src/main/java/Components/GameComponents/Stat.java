@@ -1,16 +1,25 @@
 package Components.GameComponents;
 
-import Components.Component;
 
-public class Stat extends Component {
+public class Stat {
 
     public float currentValue;
     public float maxValue;
 
     public Stat(float maxValue) {
         this.maxValue = maxValue;
-        this.currentValue = maxValue;
+        currentValue = this.maxValue;
     }
+
+    public enum Type{
+        ATTACK,
+        SPEED,
+        DEFENSE,
+        STAMINA_REGEN,
+        MANA_REGEN,
+
+    }
+
 
     public float getMaxValue() {
         return maxValue;
@@ -27,4 +36,5 @@ public class Stat extends Component {
     public void setCurrentValue(float currentValue) {
         this.currentValue = currentValue;
     }
+
 }
